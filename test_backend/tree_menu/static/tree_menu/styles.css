@@ -1,0 +1,27 @@
+html {
+    min-height: 100vh;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #edf2f9;
+}
+
+main {
+    max-width: 1300px;
+    min-height: 100vh;
+    margin: auto;
+}
+
+/* Menu */
+.top-block {
+    height: 30px;
+}
+
+.custom-menu-wrapper {
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
