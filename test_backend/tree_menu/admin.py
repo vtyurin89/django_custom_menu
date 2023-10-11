@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-
 from .models import *
+from .forms import *
 
 
 class MenuAdmin(admin.ModelAdmin):
@@ -9,11 +9,14 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 class TopMenuItemAdmin(admin.ModelAdmin):
-    exclude = ["parent"]
+    exclude = ["parent", "level"]
+    ordering = ('menu', 'title')
 
 
 class NestedMenuItemAdmin(admin.ModelAdmin):
-    pass
+    form = NestedMenuItemForm
+    ordering = ('menu', 'title')
+    exclude = ["level"]
 
 
 admin.site.register(Menu, MenuAdmin)

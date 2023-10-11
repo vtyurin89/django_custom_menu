@@ -1,4 +1,5 @@
 {% load static %}
+{% load menu_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,12 @@
 </head>
 <body>
 <main>
+    <div class="divide-block"></div>
+
+    {% draw_menu 'menu1' %}
+
   {% block body %}
+
   {% endblock body %}
 </main>
 </body>

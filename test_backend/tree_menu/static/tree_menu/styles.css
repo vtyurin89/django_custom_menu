@@ -15,13 +15,78 @@ main {
 }
 
 /* Menu */
-.top-block {
-    height: 30px;
+.divide-block {
+    height: 20px;
+}
+
+.selected-menu-item {
+    background-color: #E64A19;
 }
 
 .custom-menu-wrapper {
-    padding: 10px;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    padding: 0px;
 }
+
+.menu-list {
+    margin: 0px;
+}
+
+nav ul {
+    list-style: none;
+    background-color: #00204c;
+    position: relative;
+    margin: 0px;
+}
+
+nav ul li {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dropbtn {
+  font-size: 12px;
+  border: none;
+}
+
+nav a {
+    text-decoration: None;
+    color:#FFF;
+    font-size:20px;
+    line-height: 60px;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+nav ul li:hover > ul {
+	display:inherit;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown menu content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content a {
+  color: black;
+  padding: 6px 8px;
+  text-decoration: none;
+  display: block;
+  line-height: 30px
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}

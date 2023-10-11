@@ -1,0 +1,54 @@
+{% if not menu_items %}
+<p>Меню с таким названием не найдено!</p>
+{% else %}
+
+<div class="custom-menu-wrapper">
+
+    <nav class="nav-main">
+
+   <!-- Основной блок меню -->
+    <ul class="menu-list">
+{% for item in menu_items %}
+        {% if item.level == 1 %}
+        <div class="dropdown">
+        {% if item.url == request.path %}
+        <li class="selected-menu-item dropbtn">
+        {% else %}
+        <li class="dropbtn">
+        {% endif %}
+            <a href="{{ item.url }}">
+            {{ item.title }}</a></li>
+
+     <!-- Выпадающее меню -->
+      <div class="dropdown-content">
+        {% for child in item.nested_children_list %}
+        <a href="#">Link 1</a>
+        {% endfor %}
+
+      </div>
+        </div>
+        {% endif %}
+
+{% endfor %}
+    </ul>
+
+        <div class="divide-block"></div>
+
+    <!-- Вложенный блок меню -->
+    <ul>
+    {% for item in menu_items %}
+        {% if item.nested_menu %}
+        {% if item.url == request.path %}
+        <li class="selected-menu-item dropdown">
+        {% else %}
+        <li class="dropdown">
+        {% endif %}
+        <a href="#">{{ item.title }}</a></li>
+
+        {% endif %}
+
+    {% endfor %}
+    </ul>
+    </nav>
+</div>
+{% endif %}

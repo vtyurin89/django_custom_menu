@@ -1,4 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import F, Q
 
 
 class TopMenuItemManager(models.Manager):
@@ -16,13 +18,26 @@ class MenuItem(models.Model):
     Базовый класс, характеризует отдельные пункты меню
     """
     title = models.CharField(max_length=100, verbose_name='Название')
-    url = models.CharField(max_length=2000, verbose_name='Ссылка (URL или тэг Named URL)')
+    url = models.CharField(max_length=2000, blank=True, null=True, verbose_name='Ссылка (URL или тэг Named URL)')
     menu = models.ForeignKey('Menu', on_delete=models.CASCADE, verbose_name='Меню')
+    level = models.PositiveIntegerField(default=1)
     parent = models.ForeignKey('self', null=True, blank=True,
-                               on_delete=models.CASCADE, verbose_name='Родительский элемент')
+                               on_delete=models.CASCADE, verbose_name='Родительский элемент', related_name='children')
 
     def __str__(self):
-        return f'Меню: {self.menu} -- Элемент: {self.title}'
+        return f'Меню: {self.menu} -- Уровень {self.level} -- Элемент: {self.title}'
+
+    def clean(self):
+        if self.parent:
+            if self.menu != self.parent.menu:
+                raise ValidationError('Пункт меню и его родитель должны принадлежать одному меню!')
+
+    def save(self, *args, **kwargs):
+        if self.parent:
+            self.level = self.parent.level + 1
+        if not self.url:
+            self.url = ""
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Пункт меню'
