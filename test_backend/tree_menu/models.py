@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import F, Q
+from django.urls import reverse, get_script_prefix, NoReverseMatch
 
 
 class TopMenuItemManager(models.Manager):
@@ -27,10 +27,16 @@ class MenuItem(models.Model):
     def __str__(self):
         return f'Меню: {self.menu} -- Уровень {self.level} -- Элемент: {self.title}'
 
+    def get_url(self):
+        try:
+            self.url = reverse(self.url)
+        except NoReverseMatch:
+            pass
+        return self.url
+
     def clean(self):
-        if self.parent:
-            if self.menu != self.parent.menu:
-                raise ValidationError('Пункт меню и его родитель должны принадлежать одному меню!')
+        if self.parent and self.menu != self.parent.menu:
+            raise ValidationError('Пункт меню и его родитель должны принадлежать одному меню!')
 
     def save(self, *args, **kwargs):
         if self.parent:
@@ -42,6 +48,7 @@ class MenuItem(models.Model):
     class Meta:
         verbose_name = 'Пункт меню'
         verbose_name_plural = 'Пункты меню'
+        unique_together = ["title", "menu"]
 
 
 class Menu(models.Model):
